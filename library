@@ -248,7 +248,7 @@ library.createwindow = function(windowoptions:{})
         
         -- Only unlock mouse ONCE when opening
         us.MouseBehavior = Enum.MouseBehavior.Default
-        us.MouseIconEnabled = true
+        us.MouseIconEnabled = false
 
     else
         -- Restore original behavior on close
