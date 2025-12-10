@@ -1,3 +1,4 @@
+
 local plr = game.Players.LocalPlayer
 local mouse = plr:GetMouse()
 local ts = game:GetService("TweenService")
@@ -935,10 +936,25 @@ library.createwindow = function(windowoptions:{})
         return tabfuncs
     end
 
-    us.InputBegan:Connect(function(key,pro)
-        if not pro and key.KeyCode == keybind then
-            windowfuncs.setvisible(not frame.Visible)
-        end
+    local shiftHeld = false
+
+us.InputBegan:Connect(function(key, pro)
+    if pro then return end
+
+    if key.KeyCode == Enum.KeyCode.LeftShift or key.KeyCode == Enum.KeyCode.RightShift then
+        shiftHeld = true
+    end
+
+    if key.KeyCode == Enum.KeyCode.Backquote and shiftHeld then
+        windowfuncs.setvisible(not frame.Visible)
+    end
+end)
+
+us.InputEnded:Connect(function(key)
+    if key.KeyCode == Enum.KeyCode.LeftShift or key.KeyCode == Enum.KeyCode.RightShift then
+        shiftHeld = false
+    end
+end)
     end)
     windowfuncs.setvisible(true)
 
