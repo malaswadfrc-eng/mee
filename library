@@ -244,7 +244,7 @@ library.createwindow = function(windowoptions:{})
     if bool then
         frame.Size = UDim2.new(0,0,0,0)
         windowtween_grow:Play()
-        frame.Visible = true
+        frame.Visible = false
         
         -- Only unlock mouse ONCE when opening
         us.MouseBehavior = Enum.MouseBehavior.Default
@@ -996,4 +996,4 @@ end
 --     })
  
 return library
- 
+
