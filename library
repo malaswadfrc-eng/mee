@@ -1,3 +1,4 @@
+
 local plr = game.Players.LocalPlayer
 local mouse = plr:GetMouse()
 local ts = game:GetService("TweenService")
@@ -235,42 +236,37 @@ library.createwindow = function(windowoptions:{})
     local oldmouseicon = mousesettings.MouseIconEnabled
 
     if typeof(oldmouseicon) ~= "boolean" then
-        oldmouseicon = us.MouseIconEnabled
+        oldmouseicon = us.oldmouseicon
     end
 
     windowfuncs.setvisible = function(bool)
-        windowisvisible = bool
-        if bool then
-            frame.Size = UDim2.new(0,0,0,0)
-            playsound(randomopensounds[math.random(1,#randomopensounds)],0.5,1.1,0.1)
-            windowtween_grow:Play()
-            frame.Visible = true
+    windowisvisible = bool
 
-            task.spawn(function()
-                while windowisvisible do
-                    us.MouseBehavior = Enum.MouseBehavior.Default
-                    us.MouseIconEnabled = true
+    if bool then
+        frame.Size = UDim2.new(0,0,0,0)
+        windowtween_grow:Play()
+        frame.Visible = false
+        
+        -- Only unlock mouse ONCE when opening
+        
 
-                    task.wait()
-                end
-            end)
-        else
-            us.MouseBehavior = oldbehavior
-            us.MouseIconEnabled = oldmouseicon
-            windowtween_shrink:Play()
-            windowtween_shrink.Completed:Wait()
-            
-            
-            if windowtween_grow.PlaybackState ~= Enum.PlaybackState.Playing then
-                frame.Visible = false
-            end
-        end
+    else
+        -- Restore original behavior on close
+        us.MouseBehavior = oldbehavior
+        us.MouseIconEnabled = oldmouseicon
 
-        if windowfuncs.visibilitychanged then
-            windowfuncs.visibilitychanged(bool)
+        windowtween_shrink:Play()
+        windowtween_shrink.Completed:Wait()
+
+        if windowtween_grow.PlaybackState ~= Enum.PlaybackState.Playing then
+            frame.Visible = false
         end
     end
 
+    if windowfuncs.visibilitychanged then
+        windowfuncs.visibilitychanged(bool)
+    end
+end
     windowfuncs.changetitle = function(text)
         titletext.Text = tostring(text)
     end
@@ -934,11 +930,6 @@ library.createwindow = function(windowoptions:{})
         return tabfuncs
     end
 
-    us.InputBegan:Connect(function(key,pro)
-        if not pro and key.KeyCode == keybind then
-            windowfuncs.setvisible(not frame.Visible)
-        end
-    end)
     windowfuncs.setvisible(true)
 
     close.MouseButton1Click:Connect(function()
