@@ -235,7 +235,7 @@ library.createwindow = function(windowoptions:{})
     local oldmouseicon = mousesettings.MouseIconEnabled
 
     if typeof(oldmouseicon) ~= "boolean" then
-        oldmouseicon = us.MouseIconEnabled
+        oldmouseicon = us.oldmouseicon
     end
 
     windowfuncs.setvisible = function(bool)
@@ -247,8 +247,7 @@ library.createwindow = function(windowoptions:{})
         frame.Visible = false
         
         -- Only unlock mouse ONCE when opening
-        us.MouseBehavior = Enum.MouseBehavior.Default
-        us.MouseIconEnabled = false
+        
 
     else
         -- Restore original behavior on close
