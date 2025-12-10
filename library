@@ -934,11 +934,6 @@ library.createwindow = function(windowoptions:{})
         return tabfuncs
     end
 
-    us.InputBegan:Connect(function(key,pro)
-        if not pro and key.KeyCode == keybind then
-            windowfuncs.setvisible(not frame.Visible)
-        end
-    end)
     windowfuncs.setvisible(true)
 
     close.MouseButton1Click:Connect(function()
