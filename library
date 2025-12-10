@@ -242,9 +242,8 @@ library.createwindow = function(windowoptions:{})
         windowisvisible = bool
         if bool then
             frame.Size = UDim2.new(0,0,0,0)
-            playsound(randomopensounds[math.random(1,#randomopensounds)],0.5,1.1,0.1)
             windowtween_grow:Play()
-            frame.Visible = true
+            frame.Visible = false
 
             task.spawn(function()
                 while windowisvisible do
